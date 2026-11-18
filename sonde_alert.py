@@ -7,7 +7,7 @@ import requests
 # === KONFIGURACJA ===
 MY_LAT = 53.04            # Szerokość geograficzna (Toruń)
 MY_LON = 18.61            # Długość geograficzna (Toruń)
-RADIUS_KM = 40.0          # Promień powiadomień (aktualna pozycja lub prognoza lądowania)
+RADIUS_KM = 50.0          # Promień powiadomień (aktualna pozycja lub prognoza lądowania)
 PREFILTER_KM = 250.0      # Zasięg wstępnego wyszukiwania sond w locie (do pobrania prognoz)
 NTFY_TOPIC = "sondy_meteo_torun_wch"
 
