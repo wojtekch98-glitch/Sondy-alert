@@ -1,0 +1,40 @@
+name: Monitor SondeHub
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+    inputs:
+      send_test:
+        description: 'Wyślij testowe powiadomienie na telefon'
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  check-sondes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pobierz kod
+        uses: actions/checkout@v4
+
+      - name: Skonfiguruj Pythona
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Przywróć pamięć wysłanych alertów
+        uses: actions/cache@v4
+        with:
+          path: sonde_alerts_state.json
+          key: sonde-state-${{ github.run_id }}
+          restore-keys: |
+            sonde-state-
+
+      - name: Zainstaluj bibliotekę requests
+        run: pip install requests
+
+      - name: Sprawdź SondeHub
+        env:
+          SEND_TEST: ${{ github.event.inputs.send_test }}
+        run: python sonde_alert.py
